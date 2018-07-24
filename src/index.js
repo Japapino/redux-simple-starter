@@ -6,31 +6,27 @@ import YTSearch from 'youtube-api-search';
 
 //files
 import SearchBar from './components/search_bar.js'; 
-
+import VideoList from './components/video_list.js'; 
 const API_KEY = 'AIzaSyCaGjnK_MBXANQrTSjA1tIE1HspBr2fEUk';
 
 
 
 //create new component. This component should make some html
-
-// const App = function() { 
-// 	return <div>Hi!</div>
-// }
-
-//using es6 arrow functions. The function of 'this' is slightly different here
 class App extends Component {
 
 	constructor(props) {
 		super(props); 
 
+		//default state, the property name we can make anything. 'Videos' in this case. 
 		this.state = { videos: [] }; 
 
-		YTSearch({key: API_KEY, term: 'surfboards'}, (data) =>  {
-			this.setState({ videos: data })
+		// YTSearch({key: API_KEY, term: 'surfboards'}, function(data) =>  {
+		// 	this.setState({ videos: data })
 
-		});
+		// });
 
-
+		//changed to an arrow function
+		//runs the youtube api search, when it completes it will update the state
 		YTSearch({key: API_KEY, term: 'surfboards'}, (videos) =>  {
 			this.setState({ videos });
 			
@@ -39,9 +35,12 @@ class App extends Component {
 
 	render() { 
 		return (
+
+			//passing video list from the app parent class to the video list object. Passing Props
 			<div>
-			<SearchBar /> 
-		</div>
+				<SearchBar /> 
+				<VideoList videos={this.state.videos} />
+			</div>
 		);
 	}
 }
