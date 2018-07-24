@@ -26,14 +26,23 @@ import React, {Component} from 'react';
 
 //With arrow function 
 class SearchBar extends Component{
+	//initialize state
 	constructor(props){
-		super(props);
+		super(props); //calls Component's constructor method, must have this
 
-		this.state = {term: ''};
+		this.state = {term: ''}; //we set the name of the first property to term.
+								// This updates the term property to what the value of the input is
+								//this is the only time we will set the state like this. Everywhere else
+								//we will use this.setState
 	}
+
 	render() {
 					//we can drop the curly braces since we are using a single line
-		return <input onChange={(event) => console.log(event.target.value)} />;
+		return (
+			<div>
+				<input onChange={(event) => this.setState({term: event.target.value })} /> 
+			</div>
+		);
 	}
 }
 export default SearchBar; 

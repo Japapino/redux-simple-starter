@@ -1,12 +1,15 @@
 //go find the react libray in the react folder and assign it the name 'React'
 //libraries
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom'; 
+import YTSearch from 'youtube-api-search'; 
 
 //files
 import SearchBar from './components/search_bar.js'; 
 
-const API_KEY = '';
+const API_KEY = 'AIzaSyCaGjnK_MBXANQrTSjA1tIE1HspBr2fEUk';
+
+
 
 //create new component. This component should make some html
 
@@ -15,12 +18,32 @@ const API_KEY = '';
 // }
 
 //using es6 arrow functions. The function of 'this' is slightly different here
-const App = () => { 
-	return (
-		<div>
-		<SearchBar /> 
-	</div>
-	);
+class App extends Component {
+
+	constructor(props) {
+		super(props); 
+
+		this.state = { videos: [] }; 
+
+		YTSearch({key: API_KEY, term: 'surfboards'}, (data) =>  {
+			this.setState({ videos: data })
+
+		});
+
+
+		YTSearch({key: API_KEY, term: 'surfboards'}, (videos) =>  {
+			this.setState({ videos });
+			
+		});
+	}
+
+	render() { 
+		return (
+			<div>
+			<SearchBar /> 
+		</div>
+		);
+	}
 }
 //Take this component's generated html and put it in the DOM
 
