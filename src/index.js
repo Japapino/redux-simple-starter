@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom'; 
 import YTSearch from 'youtube-api-search'; 
 import VideoDetail from './components/video_detail.js'
+import _ from 'lodash'; 
 
 //files
 import SearchBar from './components/search_bar.js'; 
@@ -44,11 +45,16 @@ class App extends Component {
 	}
 
 	render() { 
+
+		//we only want to call the search function once every few ms
+		//debounce takes the inner function and returns a new function only called ounce every 300ms.
+		const videoSearch = _.debounce((term) => {this.videoSearch(term) }, 300);
+
 		return (
 
 			//passing video list from the app parent class to the video list object. Passing Props
 			<div>
-				<SearchBar onSearchTermChange={term => this.videoSearch(term)} /> 
+				<SearchBar onSearchTermChange={videoSearch} /> 
 				<VideoDetail video={this.state.selectedVideo} />
 				<VideoList 
 					onVideoSelect={selectedVideo => this.setState({selectedVideo})}
