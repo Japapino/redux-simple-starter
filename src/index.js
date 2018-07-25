@@ -19,7 +19,10 @@ class App extends Component {
 		super(props); 
 
 		//default state, the property name we can make anything. 'Videos' in this case. 
-		this.state = { videos: [] }; 
+		this.state = { 
+			videos: [],
+			selectedVideo: null 
+		}; 
 
 		// YTSearch({key: API_KEY, term: 'surfboards'}, function(data) =>  {
 		// 	this.setState({ videos: data })
@@ -29,8 +32,10 @@ class App extends Component {
 		//changed to an arrow function
 		//runs the youtube api search, when it completes it will update the state
 		YTSearch({key: API_KEY, term: 'surfboards'}, (videos) =>  {
-			this.setState({ videos });
-			
+			this.setState({ 
+				videos: videos,
+				selectedVideo: videos[0]
+				});
 		});
 	}
 
@@ -40,8 +45,10 @@ class App extends Component {
 			//passing video list from the app parent class to the video list object. Passing Props
 			<div>
 				<SearchBar /> 
-				<VideoDetail video={this.state.videos[0]} />
-				<VideoList videos={this.state.videos} />
+				<VideoDetail video={this.state.selectedVideo} />
+				<VideoList 
+					onVideoSelect={selectedVideo => this.setState({selectedVideo})}
+					videos={this.state.videos} />
 			</div>
 		);
 	}
