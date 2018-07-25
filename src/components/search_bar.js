@@ -39,7 +39,7 @@ class SearchBar extends Component{
 	render() {
 					//we can drop the curly braces since we are using a single line
 		return (
-			<div>
+			<div className="search-bar">
 				<input onChange={(event) => this.setState({term: event.target.value })} /> 
 			</div>
 
