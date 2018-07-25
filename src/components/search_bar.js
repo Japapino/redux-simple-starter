@@ -37,19 +37,18 @@ class SearchBar extends Component{
 	}
 
 	render() {
-					//we can drop the curly braces since we are using a single line
 		return (
 			<div className="search-bar">
-				<input onChange={(event) => this.setState({term: event.target.value })} /> 
+				<input
+					value={this.state.term}
+					onChange={event => this.onInputChange(event.target.value)} /> 
 			</div>
-
-			//as a controlled state
-			// <div>
-				// <input
-					// value={this.state.term}
-					// onChange={event => this.setState({ term: event.target.value})} />
-			// </div>		
 		);
+	}
+
+	onInputChange(term) {
+		this.setState({term});
+		this.props.onSearchTermChange(term); 
 	}
 }
 export default SearchBar; 
